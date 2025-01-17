@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Post, User } from "../types/api";
+import { CommentPost, Post, User } from "../types/api";
 
 export const api = createApi({
   reducerPath: "api",
@@ -32,6 +32,22 @@ export const api = createApi({
         body: patch,
       }),
       invalidatesTags: (_result, _error, { id }) => [{ type: "Post", id }],
+      // Optimistic update
+      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          api.util.updateQueryData("getPosts", undefined, (draft) => {
+            const post = draft.find((post) => post.id === id);
+            if (post) {
+              Object.assign(post, patch);
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
     deletePost: builder.mutation<void, number>({
       query: (id) => ({
@@ -39,6 +55,22 @@ export const api = createApi({
         method: "DELETE",
       }),
       invalidatesTags: (_result, _error, id) => [{ type: "Post", id }],
+      // Optimistic update
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          api.util.updateQueryData("getPosts", undefined, (draft) => {
+            const index = draft.findIndex((post) => post.id === id);
+            if (index !== -1) {
+              draft.splice(index, 1);
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
 
     // Users
@@ -52,11 +84,11 @@ export const api = createApi({
     }),
 
     // Comments
-    getComments: builder.query<Comment[], void>({
+    getComments: builder.query<[CommentPost], void>({
       query: () => "comments",
       providesTags: ["Comment"],
     }),
-    getPostComments: builder.query<Comment[], number>({
+    getPostComments: builder.query<CommentPost[], number>({
       query: (postId) => `posts/${postId}/comments`,
       providesTags: (_result, _error, postId) => [
         { type: "Comment", id: `post-${postId}` },

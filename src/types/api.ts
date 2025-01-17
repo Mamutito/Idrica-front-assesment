@@ -12,7 +12,7 @@ export interface User {
   email: string;
 }
 
-export interface Comment {
+export interface CommentPost {
   postId: number;
   id: number;
   name: string;
