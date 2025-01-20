@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import StatsPage from "./pages/StatsPage";
 import "./i18n";
 import { useAppSelector } from "./hooks/useAppSelector";
+import PostComments from "./components/PostComments";
 
 const App: React.FC = () => {
   const theme = useAppSelector((state) => state.ui.theme);
@@ -31,6 +32,7 @@ const App: React.FC = () => {
             <Route element={<PrivateRoute />}>
               <Route path="/create" element={<CreatePost />} />
               <Route path="/stats" element={<StatsPage />} />
+              <Route path="/post/:postId/comments" element={<PostComments />} />
             </Route>
           </Routes>
         </main>

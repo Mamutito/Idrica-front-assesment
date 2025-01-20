@@ -1,5 +1,5 @@
 {
-  "app.title": "Aplicación de Gestión de Posts",
+  "app.title": "App de Gestión de Posts",
   "nav.home": "Inicio",
   "nav.createPost": "Crear Post",
   "nav.stats": "Estadísticas",
@@ -31,5 +31,9 @@
   "stats.posts": "Número de Posts",
   "stats.comments": "Número de Comentarios",
   "theme.light": "Modo Claro",
-  "theme.dark": "Modo Oscuro"
+  "theme.dark": "Modo Oscuro",
+  "post.notFound": "Publicación no encontrada",
+  "post.comments": "Comentarios",
+  "post.noComments": "Aún no hay comentarios",
+  "post.backToList": "Volver a la lista de publicaciones"
 }

@@ -11,10 +11,12 @@ const CreatePost: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addPost({ title, body, userId: 1 }).unwrap();
-      setTitle("");
-      setBody("");
-      alert(t("createPost.success"));
+      if (title && body) {
+        await addPost({ title, body, userId: 1 }).unwrap();
+        setBody("");
+        alert(t("createPost.success"));
+        setTitle("");
+      }
     } catch (error) {
       console.error("Failed to create the post: ", error);
     }

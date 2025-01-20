@@ -31,5 +31,9 @@
   "stats.posts": "Number of Posts",
   "stats.comments": "Number of Comments",
   "theme.light": "Light Mode",
-  "theme.dark": "Dark Mode"
+  "theme.dark": "Dark Mode",
+  "post.notFound": "Post not found",
+  "post.comments": "Comments",
+  "post.noComments": "No comments yet",
+  "post.backToList": "Back to post list"
 }
