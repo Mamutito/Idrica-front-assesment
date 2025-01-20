@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../contexts/AuthContext";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { login } from "../store/slices/authSlice";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (username === "user" && password === "password") {
-      login("fake-jwt-token");
+      dispatch(login("fake-jwt-token"));
       navigate("/");
     } else {
       alert(t("login.error"));

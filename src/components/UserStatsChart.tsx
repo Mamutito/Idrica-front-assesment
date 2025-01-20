@@ -7,11 +7,11 @@ import {
   useGetPostsQuery,
   useGetCommentsQuery,
 } from "../services/api";
-import { useTheme } from "../contexts/ThemeContext";
+import { useAppSelector } from "../hooks/useAppSelector";
 
 const UserStatsChart: React.FC = () => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
+  const { theme } = useAppSelector((state) => state.ui);
   const { data: users, isLoading: isLoadingUsers } = useGetUsersQuery();
   const { data: posts, isLoading: isLoadingPosts } = useGetPostsQuery();
   const { data: comments, isLoading: isLoadingComments } =

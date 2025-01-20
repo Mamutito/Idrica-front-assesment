@@ -5,11 +5,11 @@ import {
   useUpdatePostMutation,
   useDeletePostMutation,
 } from "../services/api";
-import { useAuth } from "../contexts/AuthContext";
+import { useAppSelector } from "../hooks/useAppSelector";
 
 const PostList: React.FC = () => {
   const { t } = useTranslation();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { data: posts = [], isLoading, error } = useGetPostsQuery();
   const [updatePost] = useUpdatePostMutation();
   const [deletePost] = useDeletePostMutation();

@@ -1,23 +1,31 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../contexts/AuthContext";
-import { useTheme } from "../contexts/ThemeContext";
 import Navbar from "./Navbar";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { logout } from "../store/slices/authSlice";
+import { setLanguage, setTheme } from "../store/slices/uiSlice";
 
 const Header: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { isAuthenticated, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { theme } = useAppSelector((state) => state.ui);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    dispatch(logout());
     navigate("/login");
   };
 
-  const changeLanguage = (lng: string) => {
+  const changeLanguage = (lng: "en" | "es") => {
+    dispatch(setLanguage(lng));
     i18n.changeLanguage(lng);
+  };
+
+  const toggleTheme = () => {
+    dispatch(setTheme(theme === "light" ? "dark" : "light"));
   };
 
   return (
