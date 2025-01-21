@@ -9,9 +9,20 @@ export const api = createApi({
   tagTypes: ["Post", "User", "Comment"],
   endpoints: (builder) => ({
     // Posts
-    getPosts: builder.query<Post[], void>({
-      query: () => "posts",
-      providesTags: ["Post"],
+    getPosts: builder.query<
+      { posts: Post[]; totalCount: number },
+      { page: number; limit: number }
+    >({
+      query: ({ page, limit }) => `posts?_page=${page}&_limit=${limit}`,
+      transformResponse: (response: Post[], meta) => {
+        return {
+          posts: response,
+          totalCount: Number.parseInt(
+            meta?.response?.headers.get("X-Total-Count") || "0",
+            10
+          ),
+        };
+      },
     }),
     getPost: builder.query<Post, number>({
       query: (id) => `posts/${id}`,
@@ -25,20 +36,30 @@ export const api = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
-    updatePost: builder.mutation<Post, Partial<Post> & Pick<Post, "id">>({
-      query: ({ id, ...patch }) => ({
-        url: `posts/${id}`,
+    updatePost: builder.mutation<
+      Post,
+      { updatedPost: Post; page: number; limit: number }
+    >({
+      query: ({ updatedPost }) => ({
+        url: `posts/${updatedPost.id}`,
         method: "PUT",
-        body: patch,
+        body: updatedPost,
       }),
-      invalidatesTags: (_result, _error, { id }) => [{ type: "Post", id }],
+      invalidatesTags: (_result, _error, { updatedPost }) => [
+        { type: "Post", id: updatedPost.id },
+      ],
       // Optimistic update
-      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { updatedPost, limit, page },
+        { dispatch, queryFulfilled }
+      ) {
         const patchResult = dispatch(
-          api.util.updateQueryData("getPosts", undefined, (draft) => {
-            const post = draft.find((post) => post.id === id);
-            if (post) {
-              Object.assign(post, patch);
+          api.util.updateQueryData("getPosts", { page, limit }, (draft) => {
+            const postIndex = draft.posts.findIndex(
+              (post) => post.id === updatedPost.id
+            );
+            if (postIndex !== -1) {
+              draft.posts[postIndex] = updatedPost;
             }
           })
         );
@@ -49,19 +70,22 @@ export const api = createApi({
         }
       },
     }),
-    deletePost: builder.mutation<void, number>({
+    deletePost: builder.mutation<
+      void,
+      { id: number; page: number; limit: number }
+    >({
       query: (id) => ({
         url: `posts/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (_result, _error, id) => [{ type: "Post", id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Post", id }],
       // Optimistic update
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ id, page, limit }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          api.util.updateQueryData("getPosts", undefined, (draft) => {
-            const index = draft.findIndex((post) => post.id === id);
+          api.util.updateQueryData("getPosts", { page, limit }, (draft) => {
+            const index = draft.posts.findIndex((post) => post.id === id);
             if (index !== -1) {
-              draft.splice(index, 1);
+              draft.posts.splice(index, 1);
             }
           })
         );

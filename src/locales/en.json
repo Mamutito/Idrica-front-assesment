@@ -35,5 +35,9 @@
   "post.notFound": "Post not found",
   "post.comments": "Comments",
   "post.noComments": "No comments yet",
-  "post.backToList": "Back to post list"
+  "post.backToList": "Back to post list",
+  "pagination.previous": "Previous",
+  "pagination.next": "Next",
+  "pagination.page": "Page",
+  "pagination.of": "of"
 }

@@ -35,5 +35,9 @@
   "post.notFound": "Publicación no encontrada",
   "post.comments": "Comentarios",
   "post.noComments": "Aún no hay comentarios",
-  "post.backToList": "Volver a la lista de publicaciones"
+  "post.backToList": "Volver a la lista de publicaciones",
+  "pagination.previous": "Anterior",
+  "pagination.next": "Siguiente",
+  "pagination.page": "Página",
+  "pagination.of": "de"
 }
