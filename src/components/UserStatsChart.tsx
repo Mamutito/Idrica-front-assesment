@@ -13,7 +13,8 @@ const UserStatsChart: React.FC = () => {
   const { t } = useTranslation();
   const { theme } = useAppSelector((state) => state.ui);
   const { data: users, isLoading: isLoadingUsers } = useGetUsersQuery();
-  const { data: posts, isLoading: isLoadingPosts } = useGetPostsQuery();
+  const { data: postsData, isLoading: isLoadingPosts } = useGetPostsQuery();
+  const posts = postsData?.posts;
   const { data: comments, isLoading: isLoadingComments } =
     useGetCommentsQuery();
 
@@ -133,7 +134,7 @@ const UserStatsChart: React.FC = () => {
     ],
     legend: {
       itemStyle: {
-        color: theme === "dark" ? "#D1D5DB" : "#666666", // Cambia el color de los textos de la leyenda
+        color: theme === "dark" ? "#D1D5DB" : "#666666",
       },
     },
   };

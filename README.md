@@ -1,50 +1,88 @@
-# React + TypeScript + Vite
+# Post Management Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
 
-Currently, two official plugins are available:
+This project is a React-based application for managing posts, developed as part of a technical assessment. It demonstrates proficiency in modern web development technologies and best practices.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- CRUD operations for posts
+- User authentication
+- Internationalization (English and Spanish)
+- Responsive design with light/dark theme
+- Data visualization using Highcharts
+- State management with Redux Toolkit
+- API integration using RTK Query
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used
 
-- Configure the top-level `parserOptions` property like this:
+- React with TypeScript
+- Redux Toolkit and RTK Query
+- React Router for routing
+- i18next for internationalization
+- Highcharts for data visualization
+- Tailwind CSS for styling
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or later)
+- npm (v6 or later)
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Mamutito/Idrica-front-assesment.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Navigate to the project directory:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+cd post-management-app
 ```
+
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+### Running the Application
+
+1. Start the development server:
+
+```bash
+npm run dev
+```
+
+2. Open your browser and visit `http://localhost:5173`
+
+## Usage
+
+- Login sample (Username: user, Password: password)
+- Non-authenticated users can view posts
+- Authenticated users can perform CRUD operations on posts and view comments
+- Use the language switcher in the header to change between English and Spanish
+- Toggle between light and dark themes using the theme switcher in the header
+
+## Testing
+
+While the project doesn't currently include end-to-end tests using Cypress as requested in the assessment, I acknowledge the importance of this requirement. I have experience with Playwright for end-to-end testing and am eager to learn and implement Cypress tests for this position.
+
+I understand that end-to-end testing is crucial for ensuring the reliability and functionality of web applications, and I'm committed to expanding my skills in this area. Given the opportunity, I would be excited to learn Cypress and implement comprehensive end-to-end tests for this position.
+
+## Future Improvements
+
+- Implement end-to-end and visual regression tests using Cypress
+- Enhance error handling and add more detailed loading states
+- Improve accessibility features
+- Add more detailed translations and support for additional languages
+
+## Conclusion
+
+This project demonstrates my skills in React development, state management, API integration, and responsive design. While I wasn't able to implement the Cypress tests due to time constraints and lack of familiarity with the tool, I believe the overall quality and functionality of the application showcase my abilities as a frontend developer.
+
+I'm eager to discuss the project further and explain my approach to solving the various challenges presented in this assessment. Thank you for your consideration, and I look forward to any feedback or questions you may have.

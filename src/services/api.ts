@@ -11,9 +11,15 @@ export const api = createApi({
     // Posts
     getPosts: builder.query<
       { posts: Post[]; totalCount: number },
-      { page: number; limit: number }
+      { page?: number; limit?: number } | void
     >({
-      query: ({ page, limit }) => `posts?_page=${page}&_limit=${limit}`,
+      query: ({ page, limit } = {}) => {
+        let queryString = "posts";
+        if (page !== undefined && limit !== undefined) {
+          queryString += `?_page=${page}&_limit=${limit}`;
+        }
+        return queryString;
+      },
       transformResponse: (response: Post[], meta) => {
         return {
           posts: response,
